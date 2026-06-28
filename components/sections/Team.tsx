@@ -97,27 +97,26 @@ export default function Team() {
                     {member.initials}
                   </div>
                 )}
-
-                {/* Connect button — over the image, bottom right */}
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Connect with ${member.name} on LinkedIn`}
-                  className="flex items-center gap-1.5 font-bold text-sm text-white transition-opacity hover:opacity-85 active:scale-95"
-                  style={{
-                    position: "absolute",
-                    bottom: "12px",
-                    right: "12px",
-                    background: "#111111",
-                    borderRadius: "14px",
-                    padding: "10px 16px",
-                    lineHeight: 1,
-                  }}
-                >
-                  + Connect
-                </a>
               </div>
+
+              {/* Connect button — sits on the white card border, outside the image frame */}
+              <a
+                href={member.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Connect with ${member.name} on LinkedIn`}
+                className="team-connect-btn flex items-center gap-1.5 font-bold text-sm text-white transition-opacity hover:opacity-85 active:scale-95"
+                style={{
+                  background: "#111111",
+                  borderRadius: "14px",
+                  padding: "10px 16px",
+                  lineHeight: 1,
+                  boxShadow: "0 0 0 3px #ffffff",
+                  textDecoration: "none",
+                }}
+              >
+                + Connect
+              </a>
             </div>
           ))}
         </div>

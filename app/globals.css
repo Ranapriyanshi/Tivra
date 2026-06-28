@@ -107,6 +107,35 @@ body {
 .illus-notify:hover  { transform: translateY(-14px)                !important; box-shadow: 0 28px 64px rgba(0,0,0,0.28) !important; }
 .illus-stat:hover    { transform: rotate(7deg) translateX(-48px) translateY(-14px) !important; box-shadow: 0 28px 64px rgba(0,0,0,0.42) !important; }
 
+/* ── Team: connect button puzzle-piece cutout ── */
+.team-connect-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+/* Concave notch above the button — image "bites" into the outline */
+.team-connect-btn::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  top: -19px;
+  left: -19px;
+  width: 19px;
+  height: 19px;
+  background: radial-gradient(circle at bottom right, transparent 68%, #ffffff 68%);
+}
+/* Concave notch to the top-right — completes the cutout illusion */
+.team-connect-btn::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  top: -19px;
+  right: -19px;
+  width: 19px;
+  height: 19px;
+  background: radial-gradient(circle at bottom left, transparent 68%, #ffffff 68%);
+}
+
 /* Stagger via data-delay attribute */
 .tivra-reveal[data-delay="1"] { transition-delay: 0.06s; }
 .tivra-reveal[data-delay="2"] { transition-delay: 0.13s; }
