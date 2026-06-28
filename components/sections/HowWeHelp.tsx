@@ -1,52 +1,64 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ScrollRevealText from "@/components/ScrollRevealText";
 
-function useCountUp(target: number, active: boolean, duration = 1200) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    const start = performance.now();
-    function step(now: number) {
-      const t = Math.min(1, (now - start) / duration);
-      const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-      setValue(Math.round(target * ease));
-      if (t < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }, [active, target, duration]);
-  return value;
-}
+const stats = [
+  {
+    value: "7",
+    unit: " days",
+    heading: "Discovery to Live",
+    body: "From your first call to a published, indexed website — in under a week.",
+  },
+  {
+    value: "3×",
+    unit: "",
+    heading: "More Client Enquiries",
+    body: "Average increase in inbound leads our clients report within 30 days of launch.",
+  },
+];
 
-/* Staggered fade/slide-in for a card's inner rows — driven by `visible` */
-function rise(visible: boolean, i: number, base = 0.15): React.CSSProperties {
-  const delay = base + i * 0.1;
-  return {
-    opacity: visible ? 1 : 0,
-    transform: visible ? "translateY(0)" : "translateY(12px)",
-    transition: `opacity 0.5s cubic-bezier(.22,.68,0,1.1) ${delay}s, transform 0.5s cubic-bezier(.22,.68,0,1.1) ${delay}s`,
-  };
-}
-
-function FeatureSection({
-  flip,
-  label,
+function StatCard({
+  value,
+  unit,
   heading,
   body,
-  statValue,
-  statSuffix,
-  statLabel,
-  mockup,
+  visible,
+  delay,
 }: {
-  flip?: boolean;
-  label: string;
+  value: string;
+  unit: string;
   heading: string;
   body: string;
-  statValue: number;
-  statSuffix: string;
-  statLabel: string;
-  mockup: (visible: boolean) => React.ReactNode;
+  visible: boolean;
+  delay: number;
 }) {
+  return (
+    <div
+      className="flex-1 rounded-2xl p-5 flex flex-col justify-between"
+      style={{
+        background: "#F2EFEA",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(20px)",
+        transition: `opacity 0.6s cubic-bezier(.22,.68,0,1.1) ${delay}s, transform 0.6s cubic-bezier(.22,.68,0,1.1) ${delay}s`,
+      }}
+    >
+      <p
+        className="font-black leading-none mb-3"
+        style={{ fontSize: 36, color: "#F4611A", fontVariantNumeric: "tabular-nums" }}
+      >
+        {value}
+        <span style={{ fontSize: 20 }}>{unit}</span>
+      </p>
+      <div>
+        <p className="font-bold text-base mb-1" style={{ color: "#111111" }}>{heading}</p>
+        <p className="text-sm leading-relaxed" style={{ color: "#787878" }}>{body}</p>
+      </div>
+    </div>
+  );
+}
+
+export default function HowWeHelp() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -54,268 +66,147 @@ function FeatureSection({
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([entry]) => { setVisible(entry.isIntersecting); },
-      { threshold: 0, rootMargin: "0px 0px 18% 0px" }
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  const count = useCountUp(statValue, visible);
-
   return (
-    <div
-      ref={ref}
-      className="grid grid-cols-1 lg:grid-cols-2 items-center gap-x-10 gap-y-8 py-16"
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: "opacity 0.65s cubic-bezier(.22,.68,0,1.1), transform 0.65s cubic-bezier(.22,.68,0,1.1)",
-      }}
-    >
-      {/* Mockup */}
-      <div className={`w-full max-w-[440px] ${flip ? "lg:order-2 lg:justify-self-end" : "lg:order-1 lg:justify-self-start"}`}>{mockup(visible)}</div>
-
-      {/* Text */}
-      <div className={`w-full max-w-xl ${flip ? "lg:order-1 lg:justify-self-start" : "lg:order-2 lg:justify-self-end"}`}>
-        <p
-          className="text-xs font-bold uppercase tracking-wider mb-3"
-          style={{ color: "#F4611A" }}
-        >
-          {label}
-        </p>
-        <h3
-          className="text-3xl sm:text-4xl font-black leading-tight mb-4"
-          style={{ color: "#1A0F3C", textWrap: "balance" } as React.CSSProperties}
-        >
-          {heading}
-        </h3>
-        <p className="text-base leading-relaxed mb-8" style={{ color: "#787878" }}>
-          {body}
-        </p>
-        <div>
-          <p
-            className="font-black leading-none mb-1"
-            style={{ fontSize: 52, color: "#F4611A", fontVariantNumeric: "tabular-nums" }}
-          >
-            {count}{statSuffix}
-          </p>
-          <p className="text-sm font-medium" style={{ color: "#999" }}>{statLabel}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Individual mockups ── */
-
-function MockupWorkspace({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className="rounded-2xl p-5"
-      style={{ background: "#1A0F3C", boxShadow: "0 16px 56px rgba(26,15,60,0.28)" }}
-    >
-      <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.35)", ...rise(visible, 0) }}>
-        Client
-      </p>
-      <p className="text-lg font-black text-white mb-1" style={rise(visible, 1)}>Kim Creed</p>
-      <p className="text-xs mb-5" style={{ color: "rgba(255,255,255,0.4)", ...rise(visible, 2) }}>Budget $2,450 · 12 tasks</p>
-
-      <div className="flex flex-col gap-2">
-        {[
-          { label: "Branding for agency", variant: "muted" },
-          { label: "Website design", variant: "orange" },
-          { label: "Webflow development", variant: "light" },
-        ].map(({ label, variant }, i) => (
-          <div
-            key={label}
-            className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold"
-            style={{
-              background:
-                variant === "orange"
-                  ? "#F4611A"
-                  : variant === "light"
-                  ? "rgba(255,255,255,0.1)"
-                  : "rgba(255,255,255,0.07)",
-              color: variant === "orange" ? "#fff" : "rgba(255,255,255,0.7)",
-              ...rise(visible, i + 3),
-            }}
-          >
-            <span>{label}</span>
-            <span
-              className="w-5 h-5 rounded-md flex items-center justify-center text-xs"
-              style={{ background: variant === "orange" ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.12)" }}
-            >
-              →
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MockupUpdates({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className="rounded-2xl p-5"
-      style={{
-        background: "linear-gradient(135deg,#F4611A,#FF8C42)",
-        boxShadow: "0 16px 56px rgba(244,97,26,0.35)",
-      }}
-    >
-      <div
-        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-4"
-        style={{ background: "#1A0F3C", color: "#fff", ...rise(visible, 0) }}
-      >
-        Project milestones &nbsp;<strong>3/6</strong>
-      </div>
-
-      <div
-        className="h-1.5 rounded-full mb-5 overflow-hidden"
-        style={{ background: "rgba(255,255,255,0.2)" }}
-      >
-        <div
-          className="h-full rounded-full"
-          style={{
-            width: visible ? "50%" : "0%",
-            background: "#fff",
-            transition: "width 0.9s cubic-bezier(.22,.68,0,1.1) 0.35s",
-          }}
-        />
-      </div>
-
-      <div className="rounded-xl p-4 bg-white" style={rise(visible, 2)}>
-        <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "#bbb" }}>
-          Recent updates
-        </p>
-        {[
-          { text: "Homepage visuals uploaded", time: "5h ago" },
-          { text: "Brand guidelines approved", time: "5h ago" },
-        ].map((item, i) => (
-          <div
-            key={item.text}
-            className="flex justify-between items-center py-2 text-xs"
-            style={{ borderBottom: "1px solid #F0EDE9", ...rise(visible, i + 3) }}
-          >
-            <span style={{ color: "#1A0F3C", fontWeight: 600 }}>{item.text}</span>
-            <span style={{ color: "#bbb" }}>{item.time}</span>
-          </div>
-        ))}
-        <div className="flex justify-end mt-3">
-          <div
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold"
-            style={{ background: "#F4611A" }}
-          >
-            →
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MockupCashflow({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className="rounded-2xl p-5"
-      style={{ background: "#1A0F3C", boxShadow: "0 16px 56px rgba(26,15,60,0.28)" }}
-    >
-      <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.35)", ...rise(visible, 0) }}>
-        Revenue
-      </p>
-      <p className="text-3xl font-black text-white mb-0.5" style={{ fontVariantNumeric: "tabular-nums", ...rise(visible, 1) }}>
-        $5,280
-      </p>
-      <p className="text-xs mb-3" style={{ color: "rgba(255,255,255,0.4)", ...rise(visible, 2) }}>66% of monthly goal</p>
-
-      <div
-        className="h-2 rounded-full mb-1.5 overflow-hidden"
-        style={{ background: "rgba(255,255,255,0.1)" }}
-      >
-        <div
-          className="h-full rounded-full"
-          style={{
-            width: visible ? "66%" : "0%",
-            background: "#F4611A",
-            transition: "width 0.9s cubic-bezier(.22,.68,0,1.1) 0.35s",
-          }}
-        />
-      </div>
-      <p className="text-xs mb-5 font-semibold" style={{ color: "#F4611A", ...rise(visible, 3) }}>Goal: $8,000</p>
-
-      <div className="flex flex-col gap-2">
-        {[
-          { label: "Yesterday", amount: "$1,500" },
-          { label: "Dec 20 2025", amount: "$1,500" },
-          { label: "Dec 7 2025", amount: "$4,600" },
-        ].map(({ label, amount }, i) => (
-          <div
-            key={label}
-            className="flex justify-between items-center px-3 py-2.5 rounded-xl text-xs"
-            style={{ background: "rgba(255,255,255,0.06)", ...rise(visible, i + 4) }}
-          >
-            <span style={{ color: "rgba(255,255,255,0.55)" }}>{label}</span>
-            <span className="font-bold text-white">{amount}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default function HowWeHelp() {
-  return (
-    <section id="how" className="py-12 px-6" style={{ background: "#FAFAF8" }}>
+    <section id="how" className="py-16 px-6" style={{ background: "#FAFAF8" }}>
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="mb-4 tivra-reveal">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div>
+            <p
+              className="text-xs font-bold tracking-[0.16em] uppercase mb-3 tivra-reveal"
+              style={{ color: "#F4611A" }}
+            >
+              The Process
+            </p>
+            <ScrollRevealText
+              text="Simple, fast, and built entirely around you."
+              className="font-black leading-tight"
+              style={{ fontSize: "clamp(1.6rem, 2.8vw, 2.5rem)", maxWidth: "18ch", lineHeight: 1.15 }}
+            />
+          </div>
           <p
-            className="text-xs font-bold tracking-[0.16em] uppercase mb-4"
-            style={{ color: "#F4611A" }}
+            className="text-sm leading-relaxed max-w-xs sm:text-right tivra-reveal"
+            style={{ color: "#787878" }}
           >
-            How We Help
+            Tivra handles strategy, design, and development end-to-end — so you can focus on running your business.
           </p>
-          <h2
-            className="text-4xl sm:text-5xl font-black leading-tight max-w-xl"
-            style={{ color: "#111111", textWrap: "balance" } as React.CSSProperties}
-          >
-            Everything you need to go from idea to online.
-          </h2>
         </div>
 
-        <FeatureSection
-          label="Organised client spaces"
-          heading="One place for every client project"
-          body="Give each client a dedicated space with all their projects, files, and updates — so nothing falls through the cracks and handoffs are instant."
-          statValue={250}
-          statSuffix="%"
-          statLabel="faster first-deliverable handoff"
-          mockup={(visible) => <MockupWorkspace visible={visible} />}
-        />
+        {/* Bento grid */}
+        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-        <FeatureSection
-          flip
-          label="Smart communication & updates"
-          heading="Keep clients informed automatically"
-          body="Send structured updates, collect approvals, and share milestones — without writing a single status email."
-          statValue={40}
-          statSuffix="%"
-          statLabel="fewer client status check-ins"
-          mockup={(visible) => <MockupUpdates visible={visible} />}
-        />
+          {/* Left — saffron statement card */}
+          <div
+            className="rounded-3xl p-6 flex flex-col justify-between"
+            style={{
+              background: "#F4611A",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.65s cubic-bezier(.22,.68,0,1.1) 0s, transform 0.65s cubic-bezier(.22,.68,0,1.1) 0s",
+            }}
+          >
+            <p
+              className="text-lg font-black leading-snug"
+              style={{ color: "#ffffff" }}
+            >
+              We scope, design, and build your website — in 7 days. Zero guesswork, no bloated briefs.
+            </p>
+            <a
+              href="/book-demo"
+              className="inline-flex items-center gap-2 self-start mt-5 px-4 py-2 rounded-full text-sm font-bold transition-opacity hover:opacity-90"
+              style={{ background: "#ffffff", color: "#F4611A" }}
+            >
+              Book a Free Call
+              <span className="text-base leading-none">↗</span>
+            </a>
+          </div>
 
-        <FeatureSection
-          label="Cash flow & payments"
-          heading="Monitor revenue goals in real time"
-          body="Track payments, invoices, and monthly targets in one clean dashboard. No spreadsheets, no chasing."
-          statValue={30}
-          statSuffix="%"
-          statLabel="faster payment collection"
-          mockup={(visible) => <MockupCashflow visible={visible} />}
-        />
+          {/* Middle — two stat cards stacked */}
+          <div
+            className="flex flex-col gap-4"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.65s cubic-bezier(.22,.68,0,1.1) 0.12s, transform 0.65s cubic-bezier(.22,.68,0,1.1) 0.12s",
+            }}
+          >
+            {stats.map((s, i) => (
+              <StatCard key={s.heading} {...s} visible={visible} delay={0.2 + i * 0.1} />
+            ))}
+          </div>
 
+          {/* Right — image / visual panel */}
+          <div
+            className="rounded-3xl overflow-hidden relative"
+            style={{
+              minHeight: 260,
+              background: "#1A0F3C",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.65s cubic-bezier(.22,.68,0,1.1) 0.24s, transform 0.65s cubic-bezier(.22,.68,0,1.1) 0.24s",
+            }}
+          >
+            {/* Abstract grid illustration */}
+            <svg
+              className="absolute inset-0 w-full h-full"
+              viewBox="0 0 400 500"
+              preserveAspectRatio="xMidYMid slice"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Grid lines */}
+              {[0,1,2,3,4].map(i => (
+                <line key={`h${i}`} x1="0" y1={100 + i * 80} x2="400" y2={100 + i * 80} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+              ))}
+              {[0,1,2,3,4,5].map(i => (
+                <line key={`v${i}`} x1={i * 80} y1="0" x2={i * 80} y2="500" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+              ))}
+              {/* Browser window card */}
+              <rect x="40" y="60" width="220" height="150" rx="12" fill="rgba(255,255,255,0.07)" />
+              <rect x="40" y="60" width="220" height="28" rx="12" fill="rgba(255,255,255,0.1)" />
+              <circle cx="60" cy="74" r="5" fill="rgba(244,97,26,0.6)" />
+              <circle cx="76" cy="74" r="5" fill="rgba(255,186,0,0.4)" />
+              <circle cx="92" cy="74" r="5" fill="rgba(255,255,255,0.2)" />
+              <rect x="56" y="108" width="140" height="8" rx="4" fill="rgba(255,255,255,0.15)" />
+              <rect x="56" y="124" width="100" height="8" rx="4" fill="rgba(255,255,255,0.09)" />
+              <rect x="56" y="140" width="120" height="8" rx="4" fill="rgba(255,255,255,0.09)" />
+              <rect x="56" y="160" width="60" height="24" rx="8" fill="rgba(244,97,26,0.8)" />
+              {/* Stat chip */}
+              <rect x="180" y="170" width="100" height="52" rx="12" fill="rgba(244,97,26,0.9)" />
+              <text x="230" y="192" textAnchor="middle" fill="white" fontSize="11" fontWeight="700" opacity="0.7">Avg. Delivery</text>
+              <text x="230" y="212" textAnchor="middle" fill="white" fontSize="18" fontWeight="900">7 days</text>
+              {/* Notification card */}
+              <rect x="120" y="260" width="200" height="68" rx="14" fill="rgba(255,255,255,0.09)" />
+              <rect x="136" y="276" width="28" height="28" rx="8" fill="rgba(244,97,26,0.7)" />
+              <rect x="174" y="280" width="110" height="7" rx="3.5" fill="rgba(255,255,255,0.35)" />
+              <rect x="174" y="294" width="80" height="7" rx="3.5" fill="rgba(255,255,255,0.15)" />
+              {/* Bottom label */}
+              <rect x="40" y="370" width="180" height="48" rx="12" fill="rgba(255,255,255,0.07)" />
+              <rect x="56" y="383" width="80" height="7" rx="3.5" fill="rgba(255,255,255,0.3)" />
+              <rect x="56" y="398" width="50" height="7" rx="3.5" fill="rgba(255,255,255,0.12)" />
+            </svg>
+
+            {/* Bottom label overlay */}
+            <div className="absolute bottom-6 left-6 right-6">
+              <div
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
+                style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.8)", backdropFilter: "blur(8px)" }}
+              >
+                <span className="w-2 h-2 rounded-full bg-green-400 inline-block" />
+                Your site is live
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );
