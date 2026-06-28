@@ -31,7 +31,7 @@ export default function CountUp({
   className,
   style,
 }: CountUpProps) {
-  const [value, setValue] = useState(from);
+  const [value, setValue] = useState<number | null>(null);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
 
@@ -71,6 +71,8 @@ export default function CountUp({
       rafId = requestAnimationFrame(tick);
     };
 
+    setValue(from);
+
     const reset = () => {
       cancelAnimationFrame(rafId);
       timers.forEach(clearTimeout);
@@ -104,9 +106,7 @@ export default function CountUp({
 
   return (
     <span ref={ref} className={className} style={style}>
-      {prefix}
-      {value.toFixed(decimals)}
-      {suffix}
+      {value === null ? null : `${prefix}${value.toFixed(decimals)}${suffix}`}
     </span>
   );
 }
