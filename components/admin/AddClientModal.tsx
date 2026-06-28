@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 type Client = {
   id: string;
   name: string;
-  email: string;
+  email?: string;
   company: string;
   project_type: string;
   status: string;
