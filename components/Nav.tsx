@@ -95,7 +95,7 @@ export default function Nav() {
         {/* Actions — right col */}
         <div className="hidden md:flex items-center gap-3 flex-shrink-0" style={{ justifySelf: "end" }}>
           <a
-            href="#book"
+            href="/book-demo"
             className="text-sm font-medium"
             style={{ color: muted, transition: "color 0.38s" }}
           >
@@ -104,7 +104,7 @@ export default function Nav() {
 
           {/* Compound CTA pill + arrow button */}
           <a
-            href="#book"
+            href="/book-demo"
             className="flex items-center rounded-full overflow-hidden flex-shrink-0 transition-opacity hover:opacity-90 active:scale-95"
             style={{
               background: "#111111",
@@ -156,7 +156,7 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="#book"
+            href="/book-demo"
             className="flex items-center rounded-full overflow-hidden mt-1 hover:opacity-90"
             style={{ background: "#111111" }}
             onClick={() => setMenuOpen(false)}

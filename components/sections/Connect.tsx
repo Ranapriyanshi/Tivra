@@ -23,7 +23,7 @@ export default function Connect() {
         <div className="grid lg:grid-cols-2 gap-8">
 
           {/* Left — simple contact info */}
-          <div>
+          <div className="tivra-reveal">
             <p
               className="text-xs font-bold tracking-[0.16em] uppercase mb-4"
               style={{ color: "#F4611A" }}
@@ -67,7 +67,8 @@ export default function Connect() {
           <form
             action="mailto:dhiraj503@gmail.com"
             method="get"
-            className="rounded-3xl p-8"
+            className="rounded-3xl p-8 tivra-reveal"
+            data-delay="2"
             style={{ background: "#F2EFEA" }}
           >
             <h3 className="font-black text-xl mb-6" style={{ color: "#111111" }}>
