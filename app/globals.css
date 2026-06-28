@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-@theme {
+@theme inline {
+  --font-sans: var(--font-display);
+  --default-font-family: var(--font-display);
+
   --color-saffron: #F4611A;
   --color-marigold: #FFBA00;
   --color-peacock: #007B6E;
@@ -29,6 +32,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: #FAFAF8;
   color: #111111;
+  font-family: var(--font-display), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -54,10 +58,25 @@ body {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
-
 @keyframes tivra-fade-up {
   from { transform: translateY(18px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Footer marquee ── */
+@keyframes tivra-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Hero floating card fly-ins ── */
+@keyframes tivra-fly-left {
+  from { transform: translateX(-52px) translateY(32px) scale(0.94); opacity: 0; }
+  to   { transform: translateX(0)     translateY(0)    scale(1);    opacity: 1; }
+}
+@keyframes tivra-fly-right {
+  from { transform: translateX(52px) translateY(32px) scale(0.94); opacity: 0; }
+  to   { transform: translateX(0)    translateY(0)    scale(1);    opacity: 1; }
 }
 
 /* Scroll-reveal: elements start hidden, JS adds .is-visible */

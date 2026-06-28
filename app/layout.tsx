@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const display = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "Tivra — Websites for Startups & Small Businesses",
@@ -22,10 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body
-        className={`${geist.variable} font-[family-name:var(--font-geist)] antialiased min-h-full`}
-      >
+    <html lang="en" className={`${display.variable} h-full`}>
+      <body className="antialiased min-h-full">
         {children}
       </body>
     </html>
