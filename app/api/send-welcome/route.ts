@@ -152,7 +152,7 @@ export async function POST(req: Request) {
     if (!email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
 
     const { data, error } = await resend.emails.send({
-      from: "Tivra <hello@tivra.in>",
+      from: "onboarding@resend.dev",
       to: [email],
       subject: `Hey ${name.split(" ")[0]}, let's build something great 🚀`,
       html: buildEmail(name, company, project_type),

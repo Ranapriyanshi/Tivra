@@ -35,6 +35,7 @@ create type public.project_type as enum (
 create table if not exists public.clients (
   id            uuid primary key default gen_random_uuid(),
   name          text not null,
+  email         text not null default '',
   company       text not null default '',
   project_type  public.project_type not null default 'Landing Page',
   status        public.project_status not null default 'lead',

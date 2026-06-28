@@ -7,6 +7,7 @@ import AddClientModal from "./AddClientModal";
 type Client = {
   id: string;
   name: string;
+  email: string;
   company: string;
   project_type: string;
   status: string;
