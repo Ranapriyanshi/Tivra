@@ -66,12 +66,19 @@ function Avatar({ initials, color }: { initials: string; color: string }) {
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-16 px-6" style={{ background: "#F2EFEA" }}>
+    <section id="testimonials" className="py-24 px-6" style={{ background: "#F2EFEA" }}>
       <div className="max-w-6xl mx-auto">
 
-        <p className="text-xs font-bold tracking-[0.16em] uppercase mb-8 tivra-reveal" style={{ color: "#F4611A" }}>
+        <p className="text-xs font-bold tracking-[0.16em] uppercase mb-4 tivra-reveal" style={{ color: "#F4611A" }}>
           Testimonials
         </p>
+        <h2
+          className="text-3xl sm:text-4xl font-black mb-12 tivra-reveal"
+          data-delay="1"
+          style={{ color: "#111111" }}
+        >
+          What our clients say.
+        </h2>
 
         {/* Asymmetric grid — matches reference layout */}
         <div className="grid grid-cols-1 sm:grid-cols-[2fr_3fr] gap-4 items-start">
@@ -79,7 +86,7 @@ export default function Testimonials() {
           {/* ── Left: featured dark card ── */}
           <div
             className="rounded-3xl p-8 flex flex-col justify-between tivra-reveal"
-            data-delay="1"
+            data-delay="2"
             style={{
               background: "#1A0F3C",
               minHeight: 380,
@@ -122,7 +129,7 @@ export default function Testimonials() {
                 <div
                   key={t.author}
                   className="rounded-3xl p-6 flex flex-col justify-between tivra-reveal"
-                  data-delay={String(i + 2)}
+                  data-delay={String(i + 3)}
                   style={{
                     background: "#ffffff",
                     border: "1.5px solid #E5E1DB",
@@ -158,7 +165,7 @@ export default function Testimonials() {
             {/* Stats card */}
             <div
               className="rounded-3xl px-8 py-7 tivra-reveal"
-              data-delay="4"
+              data-delay="5"
               style={{
                 background: "#ffffff",
                 border: "1.5px solid #E5E1DB",

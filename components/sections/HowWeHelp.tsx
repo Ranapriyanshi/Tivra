@@ -74,14 +74,14 @@ export default function HowWeHelp() {
   }, []);
 
   return (
-    <section id="how" className="py-16 px-6" style={{ background: "#FAFAF8" }}>
+    <section id="how" className="py-24 px-6" style={{ background: "#FAFAF8" }}>
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
           <div>
             <p
-              className="text-xs font-bold tracking-[0.16em] uppercase mb-3 tivra-reveal"
+              className="text-xs font-bold tracking-[0.16em] uppercase mb-4 tivra-reveal"
               style={{ color: "#F4611A" }}
             >
               The Process

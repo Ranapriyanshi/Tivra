@@ -72,17 +72,25 @@ export default function Plans() {
   const plan = plans[selected];
 
   return (
-    <section id="plans" className="py-16 px-6" style={{ background: "#FAFAF8" }}>
-      <div className="max-w-4xl mx-auto">
+    <section id="plans" className="py-24 px-6" style={{ background: "#FAFAF8" }}>
+      <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-8 tivra-reveal">
-          <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: "#111111" }}>
-            Plans That <span style={{ color: "#F4611A" }}>Work For You</span>
-          </h2>
-          <p className="text-base max-w-md mx-auto" style={{ color: "#787878" }}>
-            Transparent pricing, no hidden fees — pick the plan that fits your goals.
+        <div className="mb-12">
+          <p
+            className="text-xs font-bold tracking-[0.16em] uppercase mb-4 tivra-reveal"
+            style={{ color: "#F4611A" }}
+          >
+            Pricing
           </p>
+          <div className="tivra-reveal" data-delay="1">
+            <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: "#111111" }}>
+              Plans That <span style={{ color: "#F4611A" }}>Work For You</span>
+            </h2>
+            <p className="text-base max-w-md" style={{ color: "#787878" }}>
+              Transparent pricing, no hidden fees — pick the plan that fits your goals.
+            </p>
+          </div>
         </div>
 
         {/* Containing card */}
@@ -216,7 +224,8 @@ export default function Plans() {
 
           {/* Footer note */}
           <div
-            className="px-6 sm:px-8 py-4 text-xs"
+            className="px-6 sm:px-8 py-4 text-xs tivra-reveal"
+            data-delay="2"
             style={{ borderTop: "1.5px solid #E5E1DB", color: "#ABABAB" }}
           >
             All plans include a free 15-min discovery call. Prices in CAD, taxes may apply.

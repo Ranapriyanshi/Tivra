@@ -35,7 +35,7 @@ export default function Team() {
       <div className="max-w-6xl mx-auto">
 
         {/* Section header */}
-        <div className="mb-16 tivra-reveal">
+        <div className="mb-12 tivra-reveal">
           <p
             className="text-xs font-bold tracking-[0.16em] uppercase mb-4"
             style={{ color: "#F4611A" }}
@@ -62,9 +62,10 @@ export default function Team() {
                 borderRadius: "32px",
                 boxShadow: "0 4px 32px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
                 padding: "8px",
+                position: "relative",
               }}
             >
-              {/* Image frame — inset inside the white card, fills full height */}
+              {/* Image frame — fills the inset area */}
               <div
                 style={{
                   borderRadius: "24px",
@@ -74,7 +75,6 @@ export default function Team() {
                   background: member.accent,
                 }}
               >
-                {/* Photo */}
                 {member.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -99,23 +99,48 @@ export default function Team() {
                 )}
               </div>
 
-              {/* Connect button — sits on the white card border, outside the image frame */}
+              {/* White mask — concave cutout at image's bottom-right corner */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  bottom: "8px",
+                  right: "8px",
+                  width: "88px",
+                  height: "88px",
+                  overflow: "hidden",
+                  background: "#ffffff",
+                  borderTopLeftRadius: "28px",
+                  borderTopRightRadius: "14px",
+                  borderBottomLeftRadius: "14px",
+                  borderBottomRightRadius: "24px",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                }}
+              />
+
+              {/* LinkedIn icon button — floats in the carved-out area */}
               <a
                 href={member.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Connect with ${member.name} on LinkedIn`}
-                className="team-connect-btn flex items-center gap-1.5 font-bold text-sm text-white transition-opacity hover:opacity-85 active:scale-95"
+                aria-label={`${member.name} on LinkedIn`}
+                className="flex items-center justify-center transition-opacity hover:opacity-75 active:scale-95"
                 style={{
-                  background: "#111111",
-                  borderRadius: "14px",
-                  padding: "10px 16px",
-                  lineHeight: 1,
-                  boxShadow: "0 0 0 3px #ffffff",
+                  position: "absolute",
+                  bottom: "8px",
+                  right: "8px",
+                  padding: "3px",
                   textDecoration: "none",
+                  zIndex: 2,
                 }}
               >
-                + Connect
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/linkeidn.png"
+                  alt="LinkedIn"
+                  style={{ width: "82px", height: "82px", display: "block" }}
+                />
               </a>
             </div>
           ))}

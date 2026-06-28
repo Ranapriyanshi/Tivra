@@ -217,13 +217,13 @@ function StepCard({ step, delay }: { step: typeof steps[number]; delay: number }
 
 export default function WhatWeDo() {
   return (
-    <section id="services" className="py-16 px-6" style={{ background: "#fff" }}>
+    <section id="services" className="py-24 px-6" style={{ background: "#fff" }}>
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="mb-10">
+        <div className="mb-12">
           <p
-            className="text-xs font-bold tracking-[0.16em] uppercase mb-3 tivra-reveal"
+            className="text-xs font-bold tracking-[0.16em] uppercase mb-4 tivra-reveal"
             style={{ color: "#F4611A" }}
           >
             How it works
